@@ -1,0 +1,36 @@
+[package]
+name = "wm8960"
+authors = ["spinfast <spinfast@tutanota.com>"]
+version = "0.1.0"
+edition = "2021"
+description = """
+Register map and embedded-hal based driver for Wolfson WM8960 Audio Codec.
+"""
+readme = "README.md"
+repository = "https://github.com/imxrt-rs/wm8960-rs"
+keywords = ["wolfson", "wm8960", "embedded", "no_std", "embedded-hal", "audio-codec"]
+categories = ["embedded", "no-std"]
+license = "MIT OR Apache-2.0"
+
+[features]
+default = ["eh02"] 
+eh02 = ["dep:eh02"]
+eh10 = ["dep:eh10"]
+
+[build-dependencies]
+chiptool = { git = "https://github.com/spinfast/chiptool.git", branch = "unmappable_gen" }
+serde_yaml = "0.8"
+proc-macro2 = "1.0"
+regex = "1.5"
+
+[dependencies.eh02]
+package = "embedded-hal"
+version = "0.2"
+optional = true
+
+[dependencies.eh10]
+package = "embedded-hal"
+version = "1.0.0-rc.2"
+optional = true
+
+
