@@ -16,10 +16,8 @@ license = "MIT OR Apache-2.0"
 default = ["eh02"] 
 eh02 = ["dep:eh02"]
 eh10 = ["dep:eh10"]
-codegen = ["dep:chiptool"]
 
 [build-dependencies]
-chiptool = { git = "https://github.com/spinfast/chiptool.git", branch = "unmappable_gen", optional = true }
 serde_yaml = "0.8"
 proc-macro2 = "1.0"
 regex = "1.5"
