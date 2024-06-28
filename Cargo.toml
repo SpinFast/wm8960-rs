@@ -1,7 +1,7 @@
 [package]
 name = "wm8960"
 authors = ["spinfast <spinfast@tutanota.com>"]
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = """
 Register map and embedded-hal based driver for Wolfson WM8960 Audio Codec.

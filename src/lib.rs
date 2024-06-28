@@ -112,7 +112,7 @@ where
         };
         let mut regmap = regmap::Wm8960 {
             iface: &mut iface,
-            addr: WM8960_ADDR,
+            addr: 0,
         };
         regmap.reset().write_value(1)?;
 
