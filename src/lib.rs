@@ -32,6 +32,7 @@ where
     fn write(&mut self, addr: u8, value: V) -> Result<(), Self::Error> {
         let v: u16 = value.into();
         let write_buf: [u8; 2] = [addr << 1 | (v >> 8) as u8 & 0x01, (v & 0xFF) as u8];
+
         self.i2c.write(WM8960_ADDR as u8, &write_buf)?;
         self.regs[addr as usize] = v & WM8960_REG_MASK;
         Ok(())
@@ -173,7 +174,7 @@ where
 
         let mut regmap = regmap::Wm8960 {
             iface: &mut s.iface,
-            addr: WM8960_ADDR,
+            addr: 0,
         };
         regmap.addtl_ctl1().write_value(regmap::AddtlCtl1(0x0C0))?;
         regmap.addtl_ctl4().write_value(0x40)?;
@@ -209,7 +210,7 @@ where
     pub fn set_route(&mut self, route: Route) -> Result<(), E> {
         let mut regmap = regmap::Wm8960 {
             iface: &mut self.iface,
-            addr: WM8960_ADDR,
+            addr: 0,
         };
 
         match route {
@@ -247,7 +248,7 @@ where
     pub fn set_protocol(&mut self, protocol: Protocol) -> Result<(), E> {
         let mut regmap = regmap::Wm8960 {
             iface: &mut self.iface,
-            addr: WM8960_ADDR,
+            addr: 0,
         };
         regmap.aud_intf1().modify(|intf| {
             intf.set_format(protocol as u8);
@@ -272,7 +273,7 @@ where
 
         let mut regmap = regmap::Wm8960 {
             iface: &mut self.iface,
-            addr: WM8960_ADDR,
+            addr: 0,
         };
         // disable PLL power
         regmap.pwr_mgmt2().modify(|pwr2| {
@@ -346,7 +347,7 @@ where
         };
         let mut regmap = regmap::Wm8960 {
             iface: &mut self.iface,
-            addr: WM8960_ADDR,
+            addr: 0,
         };
         regmap.clocking2().modify(|clk2| {
             clk2.set_bclkdiv(reg_div);
@@ -358,7 +359,7 @@ where
     fn set_master(&mut self, master: bool) -> Result<(), E> {
         let mut regmap = regmap::Wm8960 {
             iface: &mut self.iface,
-            addr: WM8960_ADDR,
+            addr: 0,
         };
         regmap.aud_intf1().modify(|intf| {
             intf.set_ms(master);
@@ -370,7 +371,7 @@ where
     fn set_format(&mut self, sysclk: u32, sample_rate: u32, bit_width: u32) -> Result<(), E> {
         let mut regmap = regmap::Wm8960 {
             iface: &mut self.iface,
-            addr: WM8960_ADDR,
+            addr: 0,
         };
 
         const DIVS: [u32; 7] = [256, 384, 512, 768, 1024, 1408, 1536];
@@ -416,7 +417,7 @@ where
     pub fn set_out_volume(&mut self, lvol: u16, rvol: u16) -> Result<(), E> {
         let mut regmap = regmap::Wm8960 {
             iface: &mut self.iface,
-            addr: WM8960_ADDR,
+            addr: 0,
         };
         regmap.lout1_vol().modify(|_lvol| lvol as u32)?;
         regmap.rout1_vol().modify(|_rvol| rvol as u32)?;
